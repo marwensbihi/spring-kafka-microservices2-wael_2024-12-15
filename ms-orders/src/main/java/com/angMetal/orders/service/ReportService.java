@@ -2,11 +2,11 @@ package com.angMetal.orders.service;
 
 import com.angMetal.orders.entity.Report;
 import com.angMetal.orders.repositories.ReportRepository;
+import com.angMetal.orders.exception.ReportNotFoundException; // Custom exception for report not found
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReportService {
@@ -21,8 +21,8 @@ public class ReportService {
 
     // Retrieve a report by its ID
     public Report getReportById(Long id) {
-        Optional<Report> report = reportRepository.findById(id);
-        return report.orElse(null); // Return null if not found, or handle with custom exception
+        return reportRepository.findById(id)
+                .orElseThrow(() -> new ReportNotFoundException("Report with id " + id + " not found"));
     }
 
     // Create a new report
@@ -32,24 +32,20 @@ public class ReportService {
 
     // Update an existing report
     public Report updateReport(Long id, Report updatedReport) {
-        Optional<Report> existingReport = reportRepository.findById(id);
-        if (existingReport.isPresent()) {
-            Report report = existingReport.get();
-            // Update fields
-            report.setTypeRapport(updatedReport.getTypeRapport());
-            report.setPeriodeDebut(updatedReport.getPeriodeDebut());
-            report.setPeriodeFin(updatedReport.getPeriodeFin());
-            report.setBudget(updatedReport.getBudget());
-            // Save the updated entity
-            return reportRepository.save(report);
-        }
-        return null;
+        Report existingReport = reportRepository.findById(id)
+                .orElseThrow(() -> new ReportNotFoundException("Report with id " + id + " not found"));
+
+        existingReport.setTypeRapport(updatedReport.getTypeRapport());
+        existingReport.setPeriodeDebut(updatedReport.getPeriodeDebut());
+        existingReport.setPeriodeFin(updatedReport.getPeriodeFin());
+        existingReport.setBudget(updatedReport.getBudget());
+
+        return reportRepository.save(existingReport);
     }
 
     // Delete a report by ID
     public boolean deleteReport(Long id) {
-        Optional<Report> report = reportRepository.findById(id);
-        if (report.isPresent()) {
+        if (reportRepository.existsById(id)) {
             reportRepository.deleteById(id);
             return true;
         }

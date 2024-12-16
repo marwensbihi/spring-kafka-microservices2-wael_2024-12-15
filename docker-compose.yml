@@ -160,6 +160,20 @@ services:
       - ecommerce-net
     restart: always
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-container
+    environment:
+      PMA_HOST: mysql  # MySQL service name
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - "8080:80"  # Access phpMyAdmin via http://localhost:8080
+    depends_on:
+      - mysql
+    networks:
+      - ecommerce-net  
+
 volumes:
   zookeeper-1-data:
   zookeeper-2-data:

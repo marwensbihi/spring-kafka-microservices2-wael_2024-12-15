@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2e7ead71-f377-4890-998d-4f75d4f78d0a" name="Changes" comment="" />
+    <list default="true" id="2e7ead71-f377-4890-998d-4f75d4f78d0a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/exception/ReportNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/config/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/controller/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/controller/ReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/service/ReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/service/ReportService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,12 +34,12 @@
     &quot;assignee&quot;: &quot;marwensbihi&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/marwensbihi/spring-kafka-microservices.git&quot;,
-    &quot;accountId&quot;: &quot;84d19b33-fdfe-413d-93a9-c2c166c71269&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/marwensbihi/spring-kafka-microservices2-wael_2024-12-15.git",
+    "accountId": "84d19b33-fdfe-413d-93a9-c2c166c71269"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 3
@@ -54,6 +61,7 @@
     "Maven.ms-orders [validate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
