@@ -1,0 +1,8 @@
+/ms-payment/target/
+/ms-stock/target/
+/ms-orders/target/
+/kafka-1-data/
+/kafka-2-data/
+/logs/
+/inf/
+/commons/target/

@@ -1,0 +1,174 @@
+version: '3.8'
+
+services:
+  # Zookeeper Instances
+  zookeeper-1:
+    container_name: zookeeper-1
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_SERVER_ID: 1
+    ports:
+      - 22181:2181
+    volumes:
+      - zookeeper-1-data:/var/lib/zookeeper/data
+    restart: on-failure
+    networks:
+      - ecommerce-net
+
+  zookeeper-2:
+    container_name: zookeeper-2
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_SERVER_ID: 2
+    ports:
+      - 32181:2181
+    volumes:
+      - zookeeper-2-data:/var/lib/zookeeper/data
+    restart: on-failure
+    networks:
+      - ecommerce-net
+
+  zookeeper-3:
+    container_name: zookeeper-3
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_SERVER_ID: 3
+    ports:
+      - 42181:2181
+    volumes:
+      - zookeeper-3-data:/var/lib/zookeeper/data
+    restart: on-failure
+    networks:
+      - ecommerce-net
+
+  # Kafka Brokers
+  kafka-1:
+    container_name: kafka-1
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper-1
+      - zookeeper-2
+      - zookeeper-3
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181,zookeeper-2:2181,zookeeper-3:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-1:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      #volumes:
+      #- ./kafka-1-data:/var/lib/kafka/data
+    restart: on-failure
+    networks:
+      - ecommerce-net
+
+  kafka-2:
+    container_name: kafka-2
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper-1
+      - zookeeper-2
+      - zookeeper-3
+    ports:
+      - 39092:39092
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-1:2181,zookeeper-2:2181,zookeeper-3:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-2:9092,PLAINTEXT_HOST://localhost:39092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      #volumes:
+      #- ./kafka-2-data:/var/lib/kafka/data
+    restart: on-failure
+    networks:
+      - ecommerce-net
+
+  # Elasticsearch
+  elasticsearch:
+    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - xpack.security.enabled=false
+      - xpack.security.http.ssl.enabled=false
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    restart: on-failure
+    networks:
+      - ecommerce-net
+
+  # Logstash
+  logstash:
+    container_name: logstash
+    image: docker.elastic.co/logstash/logstash:7.15.2
+    ports:
+      - 5044:5044
+      - 9600:9600
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    environment:
+      - LOGSTASH_JAVA_OPTS=-Xmx1g -Xms1g
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - KAFKA_BROKER=kafka-1:29092,kafka-2:39092
+    restart: on-failure
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - elasticsearch
+    networks:
+      - ecommerce-net
+
+  # Kibana
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.15.2
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - ELASTICSEARCH_PASSWORD=adem
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    networks:
+      - ecommerce-net
+
+  # MySQL
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=angMetal
+      - MYSQL_ROOT_PASSWORD=123456
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - ecommerce-net
+    restart: always
+
+volumes:
+  zookeeper-1-data:
+  zookeeper-2-data:
+  zookeeper-3-data:
+  kafka-1-data:
+  kafka-2-data:
+  elasticsearch-data:
+  mysql-data:
+
+networks:
+  ecommerce-net:
+    driver: bridge
