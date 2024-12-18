@@ -46,11 +46,11 @@ public class FactureVente {
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "facture_vente_product", // This is the join table
-            joinColumns = @JoinColumn(name = "facture_id"), // Foreign key for FactureVente
-            inverseJoinColumns = @JoinColumn(name = "product_id") // Foreign key for Product
+            name = "facture_vente_product",
+            joinColumns = @JoinColumn(name = "facture_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private List<Product> products; // List of associated products
+    private List<Product> products;
 
 
 }

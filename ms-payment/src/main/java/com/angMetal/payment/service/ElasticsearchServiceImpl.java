@@ -1,12 +1,11 @@
 package com.angMetal.payment.service;
 
 import com.angMetal.payment.entity.TransactionElastic;
-import com.angMetal.payment.entity.TransactionMySQL;
+import models.TransactionMySQL;
 import com.angMetal.payment.repository.TransactionElasticsearchRepository;
 import com.angMetal.payment.repository.TransactionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.action.index.IndexRequest;

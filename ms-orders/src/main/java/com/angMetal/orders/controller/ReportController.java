@@ -1,61 +1,77 @@
 package com.angMetal.orders.controller;
 
 import com.angMetal.orders.entity.Report;
+import com.angMetal.orders.entity.Report;
 import com.angMetal.orders.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/report")
+@RequestMapping("/reports") // Including versioning for better API management
 public class ReportController {
 
     @Autowired
     private ReportService reportService;
 
+
+    // Get all reports
     @GetMapping
     public ResponseEntity<List<Report>> getAllReports() {
         List<Report> reports = reportService.getAllReports();
-        if (reports.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(reports);
-    }
-
-    @PostMapping
-    public ResponseEntity<Report> createReport(@RequestBody Report report) {
-        Report createdReport = reportService.createReport(report);
-        return ResponseEntity.status(201).body(createdReport);
+        return new ResponseEntity<>(reports, HttpStatus.OK);
     }
 
 
+
+    // Get a report by its ID
     @GetMapping("/{id}")
     public ResponseEntity<Report> getReportById(@PathVariable Long id) {
-        Report report = reportService.getReportById(id);
-        if (report == null) {
-            return ResponseEntity.notFound().build();
+        Optional<Report> report = (reportService.getReportById(id));
+        if (report.isPresent()) {
+            return new ResponseEntity<>(report.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(report);
     }
 
-
+    // Update an existing report
     @PutMapping("/{id}")
-    public ResponseEntity<Report> updateReport(@PathVariable Long id, @RequestBody Report report) {
-        Report updatedReport = reportService.updateReport(id, report);
-        if (updatedReport == null) {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Optional<Report>> updateReport(@PathVariable Long id, @RequestBody Report reportDetails) {
+        Optional<Report> updatedReport = reportService.updateReport(id, reportDetails);
+        if (updatedReport != null) {
+            return new ResponseEntity<>(updatedReport, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(updatedReport);
     }
 
+    // Delete a report by its ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReport(@PathVariable Long id) {
         boolean isDeleted = reportService.deleteReport(id);
-        if (!isDeleted) {
-            return ResponseEntity.notFound().build();
+        if (isDeleted) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.noContent().build();
     }
+
+
+
+
+    // Create a new Report
+    @PostMapping
+    public ResponseEntity<Report> createReport(@RequestBody Report report) {
+        Report createdReport = reportService.createReport(report);
+        return new ResponseEntity<>(createdReport, HttpStatus.CREATED);
+    }
+
+
+  
+
 }

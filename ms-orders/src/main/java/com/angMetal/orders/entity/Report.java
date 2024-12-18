@@ -9,11 +9,13 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "report")
 public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rapportID;
+    @Column(name = "report_id")
+    private Long reportId;
 
     private String typeRapport;
 
@@ -23,6 +25,8 @@ public class Report {
     @Temporal(TemporalType.DATE)
     private Date periodeFin;
 
-    private Double Budget;
+    @Column(name = "budget")
+    @NonNull
+    private Double budget;
 
 }

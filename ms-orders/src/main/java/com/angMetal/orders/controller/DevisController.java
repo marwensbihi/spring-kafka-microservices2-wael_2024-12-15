@@ -4,6 +4,7 @@ import com.angMetal.orders.entity.Devis;
 import com.angMetal.orders.service.DevisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,13 +33,15 @@ public class DevisController {
         return devisService.findDevisById(id);
     }
 
-    // Endpoint to create or update a Devis
     @PostMapping
-    public Devis createOrUpdateDevis(@RequestBody Devis devis) {
-        return devisService.saveDevis(devis);
+    public ResponseEntity<Devis> createOrUpdateDevis(@RequestBody Devis devis) {
+        if (devis.getClient() == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+        Devis savedDevis = devisService.saveDevis(devis);
+        return ResponseEntity.ok(savedDevis);
     }
 
-    // Endpoint to delete a Devis
     @DeleteMapping("/{id}")
     public void deleteDevis(@PathVariable Long id) {
         devisService.deleteDevis(id);

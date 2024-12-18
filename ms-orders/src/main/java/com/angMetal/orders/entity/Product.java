@@ -11,7 +11,6 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "product")
 public class Product {
@@ -34,10 +33,6 @@ public class Product {
 
     @Column(name = "taxe", nullable = false)
     private Double taxe;
-
-    @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
-    @JsonBackReference
-    private List<Devis> devis;
 
 
     public Product(Long productID, String name, String description, Double prixUnitaire, int quantiteEnStock, Double taxe) {

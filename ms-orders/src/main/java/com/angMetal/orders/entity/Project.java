@@ -38,7 +38,7 @@ public class Project {
     private Client client;
 
     @OneToMany
-    private List<TimeSheet> timeSheets;
+    private List<Timesheet> timeSheets;
 
     @OneToMany
     private List<Report> reports;

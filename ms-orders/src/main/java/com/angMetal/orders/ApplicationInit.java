@@ -80,7 +80,7 @@ public class ApplicationInit {
                 adminUser.setPassword(passwordEncoder.encode(adminPassword));
 
                 adminUser.setFirstName("Admin");
-                adminUser.setLastName("raedsouli");
+                adminUser.setLastName("adamsouli");
                 adminUser.setAddress("Admin Address");
                 adminUser.setPhoneNumber("55 555 555");
                 adminUser.setRoles(Collections.singleton(adminRole));

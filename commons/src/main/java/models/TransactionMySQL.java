@@ -1,11 +1,10 @@
-package com.angMetal.payment.entity;
+package models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 import enums.PaymentType;
 

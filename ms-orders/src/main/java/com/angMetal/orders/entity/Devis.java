@@ -5,6 +5,7 @@ import com.angMetal.orders.enums.StatusDevis;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.codehaus.jackson.annotate.JsonBackReference;
 import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
@@ -44,15 +45,15 @@ public class Devis {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "clientID", nullable = false)
+    @NotNull
     private Client client;
 
-    @ManyToMany
-    @JsonManagedReference
+    @JsonBackReference
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "devis_products", // join table name
+            name = "devis_products",
             joinColumns = @JoinColumn(name = "devis_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private List<Product> products;
-
 }

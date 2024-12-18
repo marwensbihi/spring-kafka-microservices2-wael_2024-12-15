@@ -34,9 +34,10 @@ public class Company {
     @Column(name = "location")
     private String location;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
     @JsonIgnore
     private List<User> users;
+
     @OneToOne
     @JoinColumn(name = "banque_id")
     @JsonIgnore

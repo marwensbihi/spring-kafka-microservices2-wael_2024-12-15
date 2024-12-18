@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TimeSheet {
+public class Timesheet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +21,8 @@ public class TimeSheet {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    // Many timesheets belong to one project
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "projet_id")
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "report_id")
     private Report report;
 }

@@ -1,6 +1,6 @@
 package com.angMetal.payment.kafka;
 
-import com.angMetal.payment.entity.TransactionMySQL;
+import models.TransactionMySQL;
 import com.angMetal.payment.service.ElasticsearchServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import enums.FactureType;

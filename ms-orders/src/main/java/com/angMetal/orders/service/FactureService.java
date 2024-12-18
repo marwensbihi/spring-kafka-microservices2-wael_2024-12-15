@@ -46,6 +46,17 @@ public class FactureService {
         // Create FactureEvent for vente facture
         FactureEvent factureEvent = buildFactureEvent(savedFactureVente, FactureType.VENTE, factureRequest);
 
+        savedFactureVente.getProducts().forEach(factureProduct -> {
+            // Find the corresponding product in the request
+            FactureRequest.ProductWithQuantity productWithQuantity = factureRequest.getProducts().stream()
+                    .filter(p -> p.getProductId().equals(factureProduct.getProductID()))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Product not found in the request"));
+
+            // Update the quantity
+            factureProduct.setQuantiteEnStock(productWithQuantity.getQuantity());
+        });
+
         // Send the facture event to Kafka
         factureProducer.sendFactureEvent(factureEvent);
 
@@ -95,6 +106,17 @@ public class FactureService {
 
         // Create FactureEvent for achat facture
         FactureEvent factureEvent = buildFactureEvent(savedFactureAchat, FactureType.ACHAT, factureRequest);
+
+        savedFactureAchat.getProducts().forEach(factureProduct -> {
+            // Find the corresponding product in the request
+            FactureRequest.ProductWithQuantity productWithQuantity = factureRequest.getProducts().stream()
+                    .filter(p -> p.getProductId().equals(factureProduct.getProductID()))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Product not found in the request"));
+
+            // Update the quantity
+            factureProduct.setQuantiteEnStock(productWithQuantity.getQuantity());
+        });
 
         // Send the facture event to Kafka
         factureProducer.sendFactureEvent(factureEvent);

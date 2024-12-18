@@ -13,7 +13,6 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "client")
 public class Client {
@@ -40,8 +39,6 @@ public class Client {
     @Enumerated(EnumType.STRING)
     private TypeClient typeClient;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = false)
-    private List<Devis> devis;
 
     public Client(Long clientID, String name, String adresse, String email, String numeroTel, TypeClient typeClient) {
         this.clientID = clientID;
