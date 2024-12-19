@@ -10,7 +10,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 @EnableKafkaStreams
 @EnableJpaRepositories(basePackages = "com.angMetal.orders.repositories")
-@EntityScan(basePackages = "com.angMetal.orders.entity")
+@EntityScan(basePackages = {"com.angMetal.orders.entity", "models"})
+
 @SpringBootApplication(scanBasePackages = "com.angMetal.orders")
 public class OrderApplication {
 

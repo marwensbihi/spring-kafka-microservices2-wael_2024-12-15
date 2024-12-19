@@ -84,6 +84,7 @@ public class WebSecurityConfig {
                 .antMatchers("/api/v1/products/**").access("hasRole('ADMIN') or hasRole('EMPLOYEE')")
                 .antMatchers("/api/v1/clients/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/projects/**").hasRole("ADMIN")
+                .antMatchers("/api/v1/kpi/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/reports/**").access("hasRole('ADMIN') or hasRole('EMPLOYEE')")
                 .antMatchers("/api/v1/timesheet/**").access("hasRole('ADMIN') or hasRole('EMPLOYEE')")
                 .anyRequest().authenticated(); // All other requests require authentication

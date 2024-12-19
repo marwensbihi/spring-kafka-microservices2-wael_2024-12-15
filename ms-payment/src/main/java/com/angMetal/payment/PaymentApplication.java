@@ -10,7 +10,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 @EnableKafka
 @SpringBootApplication
 @EnableElasticsearchRepositories(basePackages = "com.angMetal.payment.repository")
-@EntityScan(basePackages = "models")
+@EntityScan(basePackages = { "com.angMetal.payment.entity", "models"})
 public class PaymentApplication {
 
     public static void main(String[] args) {
