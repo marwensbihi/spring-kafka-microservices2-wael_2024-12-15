@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2e7ead71-f377-4890-998d-4f75d4f78d0a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/repositories/TransactionRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/OrderApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/OrderApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/config/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/controller/KPIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/controller/KPIController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/entity/payloads/KPIResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/entity/payloads/KPIResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/service/KPIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/service/KPIService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-payment/src/main/java/com/angMetal/payment/PaymentApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-payment/src/main/java/com/angMetal/payment/PaymentApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/entity/Devis.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/entity/Devis.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,8 +181,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.OrderApplication" />
-        <item itemvalue="Application.PaymentApplication" />
         <item itemvalue="Application.StockApplication" />
+        <item itemvalue="Application.PaymentApplication" />
         <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
         <item itemvalue="Docker.docker-compose.yml.mysql: Compose Deployment" />
       </list>

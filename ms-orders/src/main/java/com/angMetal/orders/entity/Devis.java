@@ -23,7 +23,7 @@ public class Devis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "devis_id")
-    private Integer devisId;
+    private Long devisId;
 
     @Column(name = "dateCreation", nullable = false)
     @Temporal(TemporalType.DATE)
