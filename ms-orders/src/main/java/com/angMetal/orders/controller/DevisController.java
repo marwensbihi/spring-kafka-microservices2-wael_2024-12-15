@@ -49,11 +49,11 @@ public class DevisController {
         Optional<Devis> existingDevisOpt = devisService.findDevisById(id);
         if (existingDevisOpt.isPresent()) {
             Devis existingDevis = existingDevisOpt.get();
-            // Update properties of the existing Devis with new data from the request
             existingDevis.setClient(devis.getClient());
             existingDevis.setDateCreation(devis.getDateCreation());
             existingDevis.setDateExpiration(devis.getDateExpiration());
-            // Add any other fields that need to be updated
+            existingDevis.setProducts(devis.getProducts());
+            existingDevis.setMontantTotal(devis.getMontantTotal());
 
             Devis updatedDevis = devisService.saveDevis(existingDevis);
             return ResponseEntity.ok(updatedDevis);
