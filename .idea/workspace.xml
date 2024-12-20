@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="2e7ead71-f377-4890-998d-4f75d4f78d0a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/entity/Devis.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/entity/Devis.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commons/src/main/java/models/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/commons/src/main/java/models/ProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/config/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/service/FactureService.java" beforeDir="false" afterPath="$PROJECT_DIR$/ms-orders/src/main/java/com/angMetal/orders/service/FactureService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

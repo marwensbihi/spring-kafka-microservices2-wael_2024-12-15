@@ -1,3 +1,4 @@
+
 package models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,6 +13,9 @@ public class ProductDTO {
 
     @JsonProperty("product_id")
     private Long productID;
+
+    @JsonProperty("product_name")
+    private String productName;
 
     @JsonProperty("prix_unitaire")
     private Double prixUnitaire;

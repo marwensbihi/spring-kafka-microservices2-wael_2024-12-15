@@ -13,6 +13,7 @@ import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,6 +54,7 @@ public class FactureService {
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Product not found in the request"));
 
+            factureEvent.getProducts().add(createProductDTO(factureProduct, productWithQuantity));
             // Update the quantity
             factureProduct.setQuantiteEnStock(productWithQuantity.getQuantity());
         });
@@ -62,6 +64,8 @@ public class FactureService {
 
         return savedFactureVente;
     }
+
+
 
     private FactureVente createFactureVente(FactureRequest dto) {
         // Find the client by clientId
@@ -114,6 +118,7 @@ public class FactureService {
                     .findFirst()
                     .orElseThrow(() -> new RuntimeException("Product not found in the request"));
 
+            factureEvent.getProducts().add(createProductDTO(factureProduct, productWithQuantity));
             // Update the quantity
             factureProduct.setQuantiteEnStock(productWithQuantity.getQuantity());
         });
@@ -205,18 +210,29 @@ public class FactureService {
             factureEvent.setBanqueId(factureRequest.getBanqueId());
             factureEvent.setPaymentType(PaymentType.DEBIT);
         }
-
-        factureEvent.setProducts(factureRequest.getProducts().stream()
+        factureEvent.setProducts(new ArrayList<>());
+        /*.setProducts(factureRequest.getProducts().stream()
                 .map(product -> {
                     ProductDTO productDTO = new ProductDTO();
                     productDTO.setProductID(product.getProductId());
                     productDTO.setQuantity(product.getQuantity());
+                    productDTO.setProductName(product.getProductName());
                     return productDTO;
                 })
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList()));*/
         factureEvent.setFactureType(factureType);
 
         return factureEvent;
+    }
+
+    private static ProductDTO createProductDTO(Product factureProduct, FactureRequest.ProductWithQuantity productWithQuantity) {
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setProductID(factureProduct.getProductID());
+        productDTO.setQuantity(productWithQuantity.getQuantity());
+        productDTO.setProductName(factureProduct.getName());
+        productDTO.setTaxe(factureProduct.getTaxe());
+        productDTO.setPrixUnitaire(factureProduct.getPrixUnitaire());
+        return productDTO;
     }
 
 
