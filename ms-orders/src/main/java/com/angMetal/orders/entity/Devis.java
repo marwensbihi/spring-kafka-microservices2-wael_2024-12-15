@@ -1,12 +1,13 @@
 package com.angMetal.orders.entity;
 
 
+
+import com.angMetal.orders.entity.payloads.DevisProduct;
 import com.angMetal.orders.enums.StatusDevis;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -49,11 +50,6 @@ public class Devis {
     private Client client;
 
     @JsonBackReference
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "devis_products",
-            joinColumns = @JoinColumn(name = "devis_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DevisProduct> devisProducts;
 }

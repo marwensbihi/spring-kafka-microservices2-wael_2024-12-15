@@ -56,7 +56,7 @@ public class FactureService {
 
             factureEvent.getProducts().add(createProductDTO(factureProduct, productWithQuantity));
             // Update the quantity
-            factureProduct.setQuantiteEnStock(productWithQuantity.getQuantity());
+
         });
 
         // Send the facture event to Kafka
@@ -105,9 +105,7 @@ public class FactureService {
 
         FactureAchat savedFactureAchat = createAchatFacture(factureRequest);
 
-        // Update product stock after purchase
-        //updateProductStock(factureRequest, FactureType.ACHAT);
-
+     
         // Create FactureEvent for achat facture
         FactureEvent factureEvent = buildFactureEvent(savedFactureAchat, FactureType.ACHAT, factureRequest);
 
@@ -120,7 +118,7 @@ public class FactureService {
 
             factureEvent.getProducts().add(createProductDTO(factureProduct, productWithQuantity));
             // Update the quantity
-            factureProduct.setQuantiteEnStock(productWithQuantity.getQuantity());
+            
         });
 
         // Send the facture event to Kafka
@@ -211,15 +209,7 @@ public class FactureService {
             factureEvent.setPaymentType(PaymentType.DEBIT);
         }
         factureEvent.setProducts(new ArrayList<>());
-        /*.setProducts(factureRequest.getProducts().stream()
-                .map(product -> {
-                    ProductDTO productDTO = new ProductDTO();
-                    productDTO.setProductID(product.getProductId());
-                    productDTO.setQuantity(product.getQuantity());
-                    productDTO.setProductName(product.getProductName());
-                    return productDTO;
-                })
-                .collect(Collectors.toList()));*/
+
         factureEvent.setFactureType(factureType);
 
         return factureEvent;

@@ -1,70 +1,75 @@
 package com.angMetal.orders.controller;
 
 import com.angMetal.orders.entity.Devis;
+import com.angMetal.orders.entity.payloads.DevisProduct;
+import com.angMetal.orders.repositories.DevisRepository;
 import com.angMetal.orders.service.DevisService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/devis", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DevisController {
 
+    DevisRepository devisRepository;
     private final DevisService devisService;
 
-    @Autowired
-    public DevisController(DevisService devisService) {
+    public DevisController(DevisRepository devisRepository, DevisService devisService) {
+        this.devisRepository = devisRepository;
         this.devisService = devisService;
     }
 
-    // Endpoint to get all Devis
+    // Get all Devis
     @GetMapping
-    public List<Devis> getAllDevis() {
-        return devisService.findAllDevis();
+    public ResponseEntity<List<Devis>> getAllDevis() {
+        List<Devis> devisList = devisRepository.findAll();
+        return ResponseEntity.ok(devisList);
     }
 
-    // Endpoint to get a Devis by ID
+    // Get Devis by ID
     @GetMapping("/{id}")
-    public Optional<Devis> getDevisById(@PathVariable Long id) {
-        return devisService.findDevisById(id);
+    public ResponseEntity<Devis> getDevisById(@PathVariable Long id) {
+        return devisRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // Endpoint to create or update Devis (new or existing)
+    // Deleting Devi by ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteDeviById(@PathVariable Long id) {
+        Optional<Devis> devi = devisRepository.findById(id);
+
+        if (devi.isPresent()) {
+            devisRepository.deleteById(id);  // Perform the delete operation
+            return ResponseEntity.ok("Devi with ID " + id + " was successfully deleted.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Devi with ID " + id + " not found.");
+        }
+    }
+
+
+
+    // Create or Update a Devis with products and quantities
     @PostMapping
     public ResponseEntity<Devis> createDevis(@RequestBody Devis devis) {
-        if (devis.getClient() == null) {
-            return ResponseEntity.badRequest().body(null);
-        }
-        Devis savedDevis = devisService.saveDevis(devis);
-        return ResponseEntity.ok(savedDevis);
-    }
+        // Ensure each DevisProduct is linked to the Devis
+        List<DevisProduct> updatedDevisProducts = devis.getDevisProducts();
 
-    // Endpoint to update an existing Devis
-    @PutMapping("/{id}")
-    public ResponseEntity<Devis> updateDevis(@PathVariable Long id, @RequestBody Devis devis) {
-        Optional<Devis> existingDevisOpt = devisService.findDevisById(id);
-        if (existingDevisOpt.isPresent()) {
-            Devis existingDevis = existingDevisOpt.get();
-            existingDevis.setClient(devis.getClient());
-            existingDevis.setDateCreation(devis.getDateCreation());
-            existingDevis.setDateExpiration(devis.getDateExpiration());
-            existingDevis.setProducts(devis.getProducts());
-            existingDevis.setMontantTotal(devis.getMontantTotal());
 
-            Devis updatedDevis = devisService.saveDevis(existingDevis);
-            return ResponseEntity.ok(updatedDevis);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+        // Set updated products back to the Devis
+        devis.setDevisProducts(updatedDevisProducts);
 
-    // Endpoint to delete Devis
-    @DeleteMapping("/{id}")
-    public void deleteDevis(@PathVariable Long id) {
-        devisService.deleteDevis(id);
+        // Save the Devis (cascade should persist products)
+        Devis savedDevis = devisRepository.save(devis);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedDevis);
     }
 }

@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -17,12 +18,14 @@ import java.util.List;
 @Table(name = "client")
 public class Client {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "client_id")
     private Long clientID;
 
     @Column(nullable = false)
+    @NotNull
     @Size(min = 2, max = 50, message = "The name must be between 2 and 50 characters.")
     private String name;
 

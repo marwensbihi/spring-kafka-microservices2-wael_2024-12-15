@@ -1,13 +1,13 @@
 package com.angMetal.orders.entity;
 
-import lombok.AllArgsConstructor;
+import com.angMetal.orders.entity.payloads.DevisProduct;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.codehaus.jackson.annotate.JsonBackReference;
-import org.codehaus.jackson.annotate.JsonManagedReference;
+
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
+
 
 @Data
 @NoArgsConstructor
@@ -33,6 +33,7 @@ public class Product {
 
     @Column(name = "taxe", nullable = false)
     private Double taxe;
+
 
 
     public Product(Long productID, String name, String description, Double prixUnitaire, int quantiteEnStock, Double taxe) {
